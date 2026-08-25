@@ -46,15 +46,16 @@ dependencies {
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material.icons.core)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
     // ROOM 3
     implementation("androidx.room3:room3-runtime:3.0.1")
+    implementation(libs.navigation.compose)
     ksp("androidx.room3:room3-compiler:3.0.1")
 
     // SQLITE
