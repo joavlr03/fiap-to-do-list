@@ -33,23 +33,19 @@ var tarefaParaExcluir by remember {
 
 ## Telas
 
-1. Item 
+### Item 
 <img width="322" height="621" alt="image" src="https://github.com/user-attachments/assets/36ca028e-b954-4ac3-8db6-095d537bfa69" />
 
+### Lista antes da exclusao
+<img width="325" height="690" alt="image" src="https://github.com/user-attachments/assets/7faf49ef-6051-44cc-a67a-c03badfec546" />
 
+### Dialogo de exclusao
+<img width="321" height="694" alt="image" src="https://github.com/user-attachments/assets/3a20285c-42e2-4eb0-a65a-8dd650d04339" />
 
-2. Lista antes da exclusao
-   <img width="325" height="690" alt="image" src="https://github.com/user-attachments/assets/7faf49ef-6051-44cc-a67a-c03badfec546" />
+### Resultado ao cancelar
+<img width="330" height="687" alt="image" src="https://github.com/user-attachments/assets/86de070f-0f07-41df-bd67-128059ba6033" />
 
-
-
-3. Dialogo de exclusao
-   <img width="321" height="694" alt="image" src="https://github.com/user-attachments/assets/3a20285c-42e2-4eb0-a65a-8dd650d04339" />
-
-4. Resultado ao cancelar
-   <img width="330" height="687" alt="image" src="https://github.com/user-attachments/assets/86de070f-0f07-41df-bd67-128059ba6033" />
-
-5. Resultado ao excluir
-   <img width="325" height="694" alt="image" src="https://github.com/user-attachments/assets/c5701b40-d19c-4d49-874e-dd8af1174f22" />
+### Resultado ao excluir
+<img width="325" height="694" alt="image" src="https://github.com/user-attachments/assets/c5701b40-d19c-4d49-874e-dd8af1174f22" />
 
 
