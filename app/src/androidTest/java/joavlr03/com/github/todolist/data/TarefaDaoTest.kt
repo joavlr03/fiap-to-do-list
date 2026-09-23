@@ -38,7 +38,7 @@ class TarefaDaoTest {
 
     @Test
     fun inserirTarefaEListar() = runTest {
-        val tarefa = Tarefa(titulo = "Estudar Room", descricao = "Aprender Entity e DAO")
+        val tarefa = Tarefa(titulo = "Estudar Room", descricao = "Aprender Entity e DAO",)
         dao.inserir(tarefa)
 
         val tarefas = dao.listarTodas().first()
@@ -49,7 +49,7 @@ class TarefaDaoTest {
 
     @Test
     fun marcarTarefaComoConcluida() = runTest {
-        dao.inserir(Tarefa(titulo = "Tarefa 1", descricao = ""))
+        dao.inserir(Tarefa(titulo = "Tarefa 1", descricao = "",))
         val inserida = dao.listarTodas().first().first()
 
         dao.atualizar(inserida.copy(concluida = true))
@@ -60,7 +60,7 @@ class TarefaDaoTest {
 
     @Test
     fun deletarTarefa() = runTest {
-        dao.inserir(Tarefa(titulo = "Para deletar", descricao = ""))
+        dao.inserir(Tarefa(titulo = "Para deletar", descricao = "",))
         val inserida = dao.listarTodas().first().first()
 
         dao.deletar(inserida)

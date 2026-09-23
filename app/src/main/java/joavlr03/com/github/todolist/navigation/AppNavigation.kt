@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import joavlr03.com.github.todolist.user.FormularioTarefaScreen
-import joavlr03.com.github.todolist.user.ListaTarefasScreen
+import joavlr03.com.github.todolist.ui.theme.FormularioTarefaScreen
+import joavlr03.com.github.todolist.ui.theme.ListaTarefasScreen
 import joavlr03.com.github.todolist.viewmodel.TarefaViewModel
 
 

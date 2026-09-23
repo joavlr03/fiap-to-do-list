@@ -1,5 +1,10 @@
-package joavlr03.com.github.todolist.user
+package joavlr03.com.github.todolist.ui.theme
 
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.TextButton
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -30,12 +35,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import data.Tarefa
+import joavlr03.com.github.todolist.util.formatarDataHora
 import joavlr03.com.github.todolist.viewmodel.TarefaViewModel
 
 
@@ -47,16 +55,73 @@ fun ListaTarefasScreen(
 ) {
     val tarefas by viewModel.tarefas.collectAsStateWithLifecycle()
 
+    var tarefaParaExcluir by remember {
+        mutableStateOf<Tarefa?>(null)
+    }
+
     ListaTarefasContent(
         tarefas = tarefas,
         onNovaTarefa = onNovaTarefa,
         onEditarTarefa = onEditarTarefa,
         onCheckedChange = { tarefa, concluida ->
-            viewModel.atualizar(tarefa.copy(concluida = concluida))
+            viewModel.atualizar(
+                tarefa.copy(concluida = concluida)
+            )
         },
-        onDeletar = { tarefa -> viewModel.deletar(tarefa) }
+        onDeletar = { tarefa ->
+            println("CLIQUE NA LIXEIRA: ${tarefa.titulo}")
+            tarefaParaExcluir = tarefa
+        }
+
+    )
+
+    tarefaParaExcluir?.let { tarefa ->
+        DialogConfirmarExclusao(
+            tarefa = tarefa,
+            onConfirmar = {
+                viewModel.deletar(tarefa)
+                tarefaParaExcluir = null
+            },
+            onCancelar = {
+                tarefaParaExcluir = null
+            }
+        )
+    }
+}
+
+@Composable
+private fun DialogConfirmarExclusao(
+    tarefa: Tarefa,
+    onConfirmar: () -> Unit,
+    onCancelar: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onCancelar,
+        title = {
+            Text("Excluir tarefa?")
+        },
+        text = {
+            Text(
+                "A tarefa \"${tarefa.titulo}\" será excluída permanentemente."
+            )
+        },
+        confirmButton = {
+            TextButton(
+                onClick = onConfirmar
+            ) {
+                Text("Excluir")
+            }
+        },
+        dismissButton = {
+            TextButton(
+                onClick = onCancelar
+            ) {
+                Text("Cancelar")
+            }
+        }
     )
 }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -142,6 +207,15 @@ private fun TarefaItem(
                         overflow = TextOverflow.Ellipsis
                     )
                 }
+                if (tarefa.dataHora != null) {
+                    val atrasada = tarefa.dataHora < System.currentTimeMillis() && !tarefa.concluida
+                    Text(
+                        text = formatarDataHora(tarefa.dataHora),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = if (atrasada) MaterialTheme.colorScheme.error else Color.Unspecified,
+                        fontWeight = if (atrasada) FontWeight.Bold else FontWeight.Normal
+                    )
+                }
             }
             IconButton(onClick = onDeletar) {
                 Icon(Icons.Default.Delete, contentDescription = "Deletar tarefa")
@@ -196,5 +270,48 @@ private fun TarefaItemConcluidaPreview() {
         onCheckedChange = {},
         onEditar = {},
         onDeletar = {}
+    )
+}
+
+@Preview(showBackground = true, name = "Item com prazo futuro")
+@Composable
+private fun TarefaItemComPrazoPreview() {
+    val prazo = System.currentTimeMillis() + 86_400_000L
+    TarefaItem(
+        tarefa = Tarefa(id = 3, titulo = "Entregar atividade", descricao = "Upload no portal da FIAP", concluida = false, dataHora = prazo),
+        onCheckedChange = {},
+        onEditar = {},
+        onDeletar = {}
+    )
+}
+
+@Preview(showBackground = true, name = "Item atrasado")
+@Composable
+private fun TarefaItemAtrasadaPreview() {
+    val prazo = System.currentTimeMillis() - 86_400_000L
+    TarefaItem(
+        tarefa = Tarefa(id = 4, titulo = "Entregar atividade", descricao = "Upload no portal da FIAP", concluida = false, dataHora = prazo),
+        onCheckedChange = {},
+        onEditar = {},
+        onDeletar = {}
+    )
+}
+
+@Preview(
+    showBackground = true,
+    name = "Confirmação de exclusão"
+)
+@Composable
+private fun DialogConfirmarExclusaoPreview() {
+    DialogConfirmarExclusao(
+        tarefa = Tarefa(
+            id = 1,
+            titulo = "Estudar Room",
+            descricao = "Revisar anotações e DAO",
+            concluida = false,
+            dataHora = null
+        ),
+        onConfirmar = {},
+        onCancelar = {}
     )
 }

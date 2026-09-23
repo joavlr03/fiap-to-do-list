@@ -17,5 +17,6 @@ data class Tarefa(
 
         val concluida: Boolean = false,
 
-        val dataCriacao: Long = System.currentTimeMillis()
+        val dataCriacao: Long = System.currentTimeMillis(),
+        val dataHora: Long? = null
 )
